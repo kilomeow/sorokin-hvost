@@ -84,14 +84,17 @@ class Game:
         status = {"ready": None, "bots": [], "rights": None, "is_supergroup": None}
         for bot in self.bots.values():
             try:
-                self.chat.get_member(bot.id)
+                bot_member = self.chat.get_member(bot.id)
             except:
                 status["bots"].append(bot.name)
             else:
-                try:
-                    self.squirrel.promote_chat_member(self.chat.id, bot.id, **{r: True for r in Game.bots_rights})
-                except:
-                    pass
+                if bot_member.status == 'left':
+                    status["bots"].append(bot.name)
+                else:
+                    try:
+                        self.squirrel.promote_chat_member(self.chat.id, bot.id, **{r: True for r in Game.bots_rights})
+                    except:
+                        pass
         squirrel_member = self.chat.get_member(self.squirrel.id)
         check_rights = Game.bots_rights + Game.squirrel_rights
         print({r: getattr(squirrel_member, r) for r in check_rights})
