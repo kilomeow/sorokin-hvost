@@ -1,6 +1,6 @@
 # libs
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackQueryHandler
-from telegram import Bot, ReplyKeyboardMarkup, KeyboardButton, ParseMode, InlineKeyboardButton, InlineKeyboardMarkup
+from telegram import Bot, ReplyKeyboardMarkup, KeyboardButton, ParseMode, InlineKeyboardButton, InlineKeyboardMarkup, ChatAction
 from telegram.utils.request import Request
 
 import time
@@ -158,6 +158,9 @@ class Game:
             self.squirrel.send_message(self.chat.id,
                         text="все здесь??? добро пожаловать в «сорокин хвост»! я белка, налаживаю процессы работы редакции!!!")
             
+            self.squirrel.send_chat_action(self.chat.id,
+                        action=ChatAction.TYPING)
+
             time.sleep(2)
             
             self.squirrel.send_message(self.chat.id,
